@@ -1,6 +1,7 @@
 
 
 "use client";
+import React, { useEffect, useState } from 'react';
 import { Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuItems, MenuItem } from '@headlessui/react'
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
 import Link from 'next/link';
@@ -16,10 +17,23 @@ interface LayoutClientProps {
 export default function LayoutClient({ children }: LayoutClientProps) {
 
     const pathname = usePathname();
+    interface User {
+        user?: {
+            firstName?: string;
+        };
+    }
+
+    const [user, setUser] = useState<User>({}); // Estado para almacenar el usuario
 
     const isRoute = (path: string) => pathname === path;
-    const user = JSON.parse(localStorage.getItem("user") || "{}");
 
+    useEffect(() => {
+        // Este código solo se ejecuta en el cliente
+        if (typeof window !== 'undefined') {
+            const userData = localStorage.getItem("user");
+            setUser(userData ? JSON.parse(userData) : {});
+        }
+    }, []);
 
     return (
         <div>

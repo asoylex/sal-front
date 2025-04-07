@@ -9,6 +9,7 @@ export function registerUser(user) {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
+            'Authorization': `Bearer ${localStorage.getItem('accessToken')}`,
         },
         body: JSON.stringify(user),
     })
@@ -29,6 +30,7 @@ export function getUsers() {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
+            'Authorization': `Bearer ${localStorage.getItem('accessToken')}`,
         }
     })
         .then((res) => res.json())
